@@ -188,7 +188,9 @@ typedef struct {
     ngx_table_elt_t                  *if_range;
 
     ngx_table_elt_t                  *transfer_encoding;
+#if (NGX_HTTP_EXPECT)
     ngx_table_elt_t                  *expect;
+#endif
     ngx_table_elt_t                  *upgrade;
 
 #if (NGX_HTTP_GZIP)
@@ -523,7 +525,9 @@ struct ngx_http_request_s {
     unsigned                          request_complete:1;
     unsigned                          request_output:1;
     unsigned                          header_sent:1;
+#if (NGX_HTTP_EXPECT)
     unsigned                          expect_tested:1;
+#endif
     unsigned                          root_tested:1;
     unsigned                          done:1;
     unsigned                          logged:1;

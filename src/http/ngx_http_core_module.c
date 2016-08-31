@@ -963,7 +963,9 @@ ngx_http_core_find_config_phase(ngx_http_request_t *r,
                       "client intended to send too large body: %O bytes",
                       r->headers_in.content_length_n);
 
+#if (NGX_HTTP_EXPECT)
         r->expect_tested = 1;
+#endif
         (void) ngx_http_discard_request_body(r);
         ngx_http_finalize_request(r, NGX_HTTP_REQUEST_ENTITY_TOO_LARGE);
         return NGX_OK;
@@ -2541,7 +2543,9 @@ ngx_http_subrequest(ngx_http_request_t *r,
     sr->internal = 1;
 
     sr->discard_body = r->discard_body;
+#if (NGX_HTTP_EXPECT)
     sr->expect_tested = 1;
+#endif
     sr->main_filter_need_in_memory = r->main_filter_need_in_memory;
 
     sr->uri_changes = NGX_HTTP_MAX_URI_CHANGES + 1;

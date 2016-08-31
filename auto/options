@@ -57,6 +57,7 @@ NGX_HTTP_SCGI_TEMP_PATH=
 
 HTTP_CACHE=YES
 HTTP_CHARSET=YES
+HTTP_EXPECT=YES
 HTTP_GZIP=YES
 HTTP_SSL=NO
 HTTP_V2=NO
@@ -242,6 +243,7 @@ do
         --with-http_slice_module)        HTTP_SLICE=YES             ;;
 
         --without-http_charset_module)   HTTP_CHARSET=NO            ;;
+        --without-http_expect)           HTTP_EXPECT=NO             ;;
         --without-http_gzip_module)      HTTP_GZIP=NO               ;;
         --without-http_ssi_module)       HTTP_SSI=NO                ;;
         --without-http_userid_module)    HTTP_USERID=NO             ;;

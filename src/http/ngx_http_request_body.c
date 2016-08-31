@@ -16,7 +16,9 @@ static ngx_int_t ngx_http_write_request_body(ngx_http_request_t *r);
 static ngx_int_t ngx_http_read_discarded_request_body(ngx_http_request_t *r);
 static ngx_int_t ngx_http_discard_request_body_filter(ngx_http_request_t *r,
     ngx_buf_t *b);
+#if (NGX_HTTP_EXPECT)
 static ngx_int_t ngx_http_test_expect(ngx_http_request_t *r);
+#endif
 
 static ngx_int_t ngx_http_request_body_filter(ngx_http_request_t *r,
     ngx_chain_t *in);
@@ -53,10 +55,12 @@ ngx_http_read_client_request_body(ngx_http_request_t *r,
     }
 #endif
 
+#if (NGX_HTTP_EXPECT)
     if (ngx_http_test_expect(r) != NGX_OK) {
         rc = NGX_HTTP_INTERNAL_SERVER_ERROR;
         goto done;
     }
+#endif
 
     rb = ngx_pcalloc(r->pool, sizeof(ngx_http_request_body_t));
     if (rb == NULL) {
@@ -525,9 +529,11 @@ ngx_http_discard_request_body(ngx_http_request_t *r)
     }
 #endif
 
+#if (NGX_HTTP_EXPECT)
     if (ngx_http_test_expect(r) != NGX_OK) {
         return NGX_HTTP_INTERNAL_SERVER_ERROR;
     }
+#endif
 
     rev = r->connection->read;
 
@@ -797,6 +803,7 @@ ngx_http_discard_request_body_filter(ngx_http_request_t *r, ngx_buf_t *b)
 }
 
 
+#if (NGX_HTTP_EXPECT)
 static ngx_int_t
 ngx_http_test_expect(ngx_http_request_t *r)
 {
@@ -837,6 +844,7 @@ ngx_http_test_expect(ngx_http_request_t *r)
 
     return NGX_ERROR;
 }
+#endif
 
 
 static ngx_int_t

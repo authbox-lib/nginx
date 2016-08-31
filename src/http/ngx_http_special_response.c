@@ -415,7 +415,9 @@ ngx_http_special_response_handler(ngx_http_request_t *r, ngx_int_t error)
         }
     }
 
+#if (NGX_HTTP_EXPECT)
     r->expect_tested = 1;
+#endif
 
     if (ngx_http_discard_request_body(r) != NGX_OK) {
         r->keepalive = 0;
@@ -538,9 +540,11 @@ ngx_http_send_error_page(ngx_http_request_t *r, ngx_http_err_page_t *err_page)
 
     overwrite = err_page->overwrite;
 
+#if (NGX_HTTP_EXPECT)
     if (overwrite && overwrite != NGX_HTTP_OK) {
         r->expect_tested = 1;
     }
+#endif
 
     if (overwrite >= 0) {
         r->err_status = overwrite;
